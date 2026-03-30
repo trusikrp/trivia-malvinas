@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#003366">
+<meta name="description" content="Trivia educativa sobre los ejes del reclamo soberano argentino sobre las Islas Malvinas — ISPI N° 4007 Inmaculada Concepción">
+<title>Trivia Malvinas · ISPI N° 4007</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:       #003366;
+    --azul-m:     #005f9e;
+    --celeste:    #74acdf;
+    --cel-cl:     #d6eeff;
+    --blanco:     #ffffff;
+    --gris-bg:    #f0f4f9;
+    --texto:      #1a1a2e;
+    --suave:      #5a6375;
+    --geo-bg:     #d6eeff;  --geo-c: #005f9e;
+    --hist-bg:    #fff3cd;  --hist-c: #7a4f00;
+    --jur-bg:     #ede7f6;  --jur-c:  #5e35b1;
+    --ok:         #1b7c4a;  --ok-bg:  #d4edda;
+    --mal:        #922b21;  --mal-bg: #fce8e6;
+    --sol:        #f5a623;
+    --safe-b:     env(safe-area-inset-bottom, 0px);
+    --safe-t:     env(safe-area-inset-top, 0px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { height: 100%; }
+
+  body {
+    font-family: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--gris-bg);
+    color: var(--texto);
+    min-height: 100%;
+    /* iOS momentum scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent text size adjustment on rotation */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Prevent callout on long press */
+    -webkit-touch-callout: none;
+  }
+
+  /* ── STRIPE ── */
+  .stripe {
+    height: 10px;
+    background: linear-gradient(to right,
+      var(--celeste) 33.33%, var(--blanco) 33.33%,
+      var(--blanco) 66.66%, var(--celeste) 66.66%);
+  }
+  .stripe-top { padding-top: var(--safe-t); background-color: var(--celeste); }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--azul);
+    color: var(--blanco);
+    padding: 16px 20px 14px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 130%, rgba(116,172,223,.22) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .inst-tag {
+    font-size: 0.72em; font-weight: 700; letter-spacing: 0.07em;
+    text-transform: uppercase; opacity: 0.75;
+    margin-bottom: 4px;
+  }
+  .header-sol {
+    font-size: 2em; display: inline-block;
+    animation: spin-sol 22s linear infinite;
+    will-change: transform;
+  }
+  @keyframes spin-sol { to { transform: rotate(360deg); } }
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.45em; font-weight: 900;
+    letter-spacing: 0.02em; line-height: 1.15;
+    position: relative;
+  }
+  .header-sub {
+    font-size: 0.78em; opacity: 0.78; margin-top: 3px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    position: relative;
+  }
+
+  /* ── WRAPPER ── */
+  .wrap {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 14px 13px calc(76px + var(--safe-b));
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadeUp .32s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--blanco);
+    border-radius: 16px;
+    padding: 20px 18px;
+    margin-bottom: 13px;
+    box-shadow: 0 2px 14px rgba(0,51,102,.08);
+  }
+
+  /* ── INTRO ── */
+  .intro-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.55em; color: var(--azul);
+    text-align: center; line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .intro-sub {
+    text-align: center; color: var(--suave);
+    font-size: 0.9em; margin-bottom: 18px; line-height: 1.5;
+  }
+  .ejes-lista { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .eje-chip {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 14px; border-radius: 11px;
+    font-size: 0.92em; font-weight: 700;
+    border-left: 4px solid currentColor;
+  }
+  .eje-chip span { font-size: 1.1em; flex-shrink: 0; }
+  .chip-geo  { background: var(--geo-bg);  color: var(--geo-c);  border-color: var(--celeste); }
+  .chip-hist { background: var(--hist-bg); color: var(--hist-c); border-color: var(--sol); }
+  .chip-jur  { background: var(--jur-bg);  color: var(--jur-c);  border-color: #9575cd; }
+  .info-meta {
+    text-align: center; font-size: 0.8em; color: var(--suave);
+    margin-bottom: 16px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: block; width: 100%;
+    min-height: 50px; /* iOS HIG: 44pt minimum */
+    padding: 13px 18px;
+    border-radius: 12px;
+    font-size: 1em; font-weight: 700;
+    cursor: pointer; border: none;
+    font-family: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.02em;
+    /* Prevent 300ms delay on Android/iOS */
+    touch-action: manipulation;
+    /* Remove iOS default button styling */
+    -webkit-appearance: none;
+    appearance: none;
+    /* Smooth transitions */
+    transition: opacity .15s, transform .12s, box-shadow .12s;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .btn:active { opacity: .82; transform: scale(.97); }
+  .btn + .btn { margin-top: 10px; }
+  .btn-primary   { background: var(--azul); color: var(--blanco); box-shadow: 0 3px 12px rgba(0,51,102,.28); }
+  .btn-secondary { background: var(--blanco); color: var(--azul); border: 2px solid var(--celeste); }
+  .btn-celeste   { background: var(--celeste); color: var(--blanco); box-shadow: 0 3px 10px rgba(116,172,223,.38); }
+
+  /* ── PROGRESS ── */
+  .progress-track {
+    background: #dde6f0; border-radius: 6px; height: 7px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 6px;
+    background: linear-gradient(90deg, var(--celeste), var(--azul-m));
+    transition: width .42s cubic-bezier(.4,0,.2,1);
+    will-change: width;
+  }
+  .progress-meta {
+    display: flex; justify-content: space-between;
+    font-size: 0.77em; color: var(--suave); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    margin-top: 5px;
+  }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 0.78em; font-weight: 700;
+    margin-bottom: 12px; border: 1.5px solid currentColor;
+  }
+  .badge-geo  { background: var(--geo-bg);  color: var(--geo-c); }
+  .badge-hist { background: var(--hist-bg); color: var(--hist-c); }
+  .badge-jur  { background: var(--jur-bg);  color: var(--jur-c); }
+
+  /* ── QUESTION ── */
+  .pregunta-txt {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1em; color: var(--texto);
+    line-height: 1.46; margin-bottom: 18px; font-weight: 700;
+  }
+
+  /* ── OPTIONS ── */
+  .opciones { display: flex; flex-direction: column; gap: 9px; }
+  .opcion {
+    min-height: 50px; /* iOS HIG */
+    padding: 13px 15px;
+    border: 2px solid #d4dff0;
+    border-radius: 11px;
+    font-size: 0.92em; cursor: pointer;
+    text-align: left;
+    background: var(--blanco);
+    color: var(--texto);
+    font-family: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    line-height: 1.35;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+    appearance: none;
+    /* Transition for feedback */
+    transition: border-color .18s, background .18s, transform .12s;
+    width: 100%;
+    display: flex; align-items: center;
+  }
+  /* Only apply hover on non-touch devices */
+  @media (hover: hover) {
+    .opcion:hover:not(:disabled) {
+      border-color: var(--celeste);
+      background: var(--cel-cl);
+      transform: translateX(3px);
+    }
+  }
+  .opcion:active:not(:disabled) {
+    background: var(--cel-cl);
+    border-color: var(--celeste);
+    transform: scale(.98);
+  }
+  .opcion.correcta  { background: var(--ok-bg);  border-color: var(--ok);  color: var(--ok);  font-weight: 700; }
+  .opcion.incorrecta{ background: var(--mal-bg); border-color: var(--mal); color: var(--mal); font-weight: 700; }
+  .opcion.opacada   { opacity: .38; }
+  .opcion:disabled  { cursor: default; transform: none !important; }
+
+  /* ── EXPLANATION ── */
+  .explicacion {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: #f3f7fc;
+    border-left: 4px solid var(--celeste);
+    border-radius: 0 10px 10px 0;
+    font-size: 0.86em; color: var(--suave);
+    line-height: 1.58;
+  }
+  .explicacion.show { display: block; animation: fadeUp .25s ease both; }
+  .explicacion strong { color: var(--texto); display: block; margin-bottom: 4px; font-size: 1em; }
+
+  /* ── RESULT ── */
+  .result-hero { text-align: center; padding: 8px 0 14px; }
+  .result-emoji { font-size: 3.2em; display: block; margin-bottom: 6px; }
+  .result-score {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 4em; font-weight: 900; color: var(--azul); line-height: 1;
+  }
+  .result-denom { font-size: 0.95em; color: var(--suave); font-weight: 600; margin-top: 3px; }
+  .result-msg   { font-size: 0.97em; font-weight: 700; color: var(--azul-m); margin-top: 10px; line-height: 1.4; }
+
+  .section-label {
+    font-size: 0.73em; font-weight: 700; color: var(--suave);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 9px;
+  }
+  .divider { border: none; border-top: 1px solid #e4ecf4; margin: 15px 0; }
+
+  .ejes-grid { display: flex; flex-direction: column; gap: 7px; }
+  .eje-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 11px 13px; border-radius: 10px;
+  }
+  .eje-row-label { font-size: 0.88em; font-weight: 700; }
+  .eje-row-score { font-size: 1em; font-weight: 900; }
+
+  /* ── QR SCREEN ── */
+  .qr-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35em; color: var(--azul); margin-bottom: 5px; text-align: center;
+  }
+  .qr-sub { font-size: 0.86em; color: var(--suave); text-align: center; margin-bottom: 18px; line-height: 1.5; }
+  .qr-wrap { display: flex; justify-content: center; margin-bottom: 16px; }
+  .qr-box {
+    background: var(--blanco);
+    border: 3px solid var(--azul);
+    border-radius: 14px;
+    padding: 11px;
+    display: inline-block;
+  }
+  .qr-box img { display: block; border-radius: 6px; }
+
+  .url-label {
+    font-size: 0.75em; font-weight: 700; color: var(--suave);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px;
+  }
+  .url-input {
+    width: 100%; padding: 11px 12px;
+    border: 2px solid #d4dff0; border-radius: 9px;
+    font-size: 0.86em;
+    font-family: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--texto); outline: none;
+    -webkit-appearance: none; appearance: none;
+    transition: border-color .2s;
+    margin-bottom: 10px;
+  }
+  .url-input:focus { border-color: var(--celeste); }
+
+  .qr-url-box {
+    background: var(--gris-bg); border: 1px solid #d4dff0;
+    border-radius: 8px; padding: 9px 12px;
+    font-size: 0.77em; color: var(--suave);
+    word-break: break-all; line-height: 1.5; margin-bottom: 12px;
+  }
+  .qr-hint {
+    font-size: 0.8em; color: var(--hist-c); line-height: 1.55;
+    background: var(--hist-bg); border-radius: 9px;
+    padding: 11px 13px; border-left: 3px solid var(--sol);
+    margin-bottom: 14px;
+  }
+  .qr-hint strong { font-weight: 700; display: block; margin-bottom: 3px; }
+
+  /* ── SAFE AREA BOTTOM ── */
+  .bottom-pad { height: calc(70px + var(--safe-b)); }
+
+  /* ── BOTÓN SIGUIENTE FIJO ── */
+  .sig-fixed {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 12px 16px calc(12px + var(--safe-b));
+    background: linear-gradient(to top, rgba(240,244,249,1) 60%, rgba(240,244,249,0));
+    pointer-events: none;
+    transform: translateY(120%);
+    transition: transform .35s cubic-bezier(.34,1.3,.64,1);
+  }
+  .sig-fixed.visible {
+    transform: translateY(0);
+    pointer-events: all;
+  }
+  .sig-fixed .btn-sig-inner {
+    max-width: 500px;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    min-height: 54px;
+    padding: 15px 22px;
+    border-radius: 14px;
+    font-size: 1.05em; font-weight: 800;
+    cursor: pointer; border: none;
+    font-family: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.03em;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--azul);
+    color: var(--blanco);
+    box-shadow: 0 4px 20px rgba(0,51,102,.35), 0 1px 4px rgba(0,0,0,.15);
+    transition: opacity .15s, transform .12s, box-shadow .15s;
+    text-align: center;
+  }
+  .sig-fixed .btn-sig-inner:active {
+    opacity: .84; transform: scale(.97);
+    box-shadow: 0 2px 8px rgba(0,51,102,.25);
+  }
+  /* Pulso suave para llamar la atención */
+  @keyframes pulso {
+    0%   { box-shadow: 0 4px 20px rgba(0,51,102,.35), 0 0 0 0 rgba(116,172,223,.6); }
+    60%  { box-shadow: 0 4px 20px rgba(0,51,102,.35), 0 0 0 10px rgba(116,172,223,0); }
+    100% { box-shadow: 0 4px 20px rgba(0,51,102,.35), 0 0 0 0 rgba(116,172,223,0); }
+  }
+  .sig-fixed.visible .btn-sig-inner {
+    animation: pulso 1.2s ease .15s 2;
+  }
+</style>
+</head>
+<body>
+
+<!-- iOS notch area -->
+<div class="stripe-top"><div class="stripe"></div></div>
+
+<div class="header">
+  <div class="inst-tag">ISPI N° 4007 &ldquo;Inmaculada Concepción&rdquo; · Vera, Santa Fe</div>
+  <div class="header-sol">☀️</div>
+  <h1>Trivia Malvinas</h1>
+  <div class="header-sub">Los tres ejes del reclamo soberano argentino</div>
+</div>
+<div class="stripe"></div>
+
+<div class="wrap">
+
+  <!-- ══════════ INTRO ══════════ -->
+  <div class="screen active" id="s-intro">
+    <div class="card" style="margin-top:12px">
+      <p class="intro-title">🇦🇷 ¿Cuánto sabés sobre Malvinas?</p>
+      <p class="intro-sub">Poné a prueba lo aprendido sobre los fundamentos del reclamo argentino de soberanía sobre las Islas Malvinas, Georgias del Sur y Sandwich del Sur.</p>
+      <div class="ejes-lista">
+        <div class="eje-chip chip-geo"><span>🌎</span> Eje Geográfico y Científico</div>
+        <div class="eje-chip chip-hist"><span>📜</span> Eje Histórico</div>
+        <div class="eje-chip chip-jur"><span>⚖️</span> Eje Jurídico e Internacional</div>
+      </div>
+      <p class="info-meta">12 preguntas aleatorias · Leé cada explicación</p>
+      <button class="btn btn-primary" onclick="iniciar()">▶ Comenzar la trivia</button>
+      <button class="btn btn-secondary" onclick="ir('s-qr','s-intro')">📱 Ver código QR para compartir</button>
+    </div>
+  </div>
+
+  <!-- ══════════ JUEGO ══════════ -->
+  <div class="screen" id="s-juego">
+    <div class="card" style="margin-top:12px; padding-bottom:14px">
+      <div class="progress-track">
+        <div class="progress-fill" id="prog-bar" style="width:0%"></div>
+      </div>
+      <div class="progress-meta">
+        <span id="prog-txt">Pregunta 1 de 12</span>
+        <span id="prog-pts">⭐ 0 pts</span>
+      </div>
+    </div>
+    <div class="card">
+      <span class="badge badge-geo" id="q-badge">🌎 Geográfico</span>
+      <p class="pregunta-txt" id="q-txt">Cargando…</p>
+      <div class="opciones" id="q-ops"></div>
+      <div class="explicacion" id="q-expl"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ RESULTADO ══════════ -->
+  <div class="screen" id="s-resultado">
+    <div class="card" style="margin-top:12px">
+      <div class="result-hero">
+        <span class="result-emoji" id="res-emoji">🏆</span>
+        <div class="result-score" id="res-score">0</div>
+        <div class="result-denom">de 12 respuestas correctas</div>
+        <p class="result-msg" id="res-msg"></p>
+      </div>
+      <hr class="divider">
+      <p class="section-label">Resultados por eje</p>
+      <div class="ejes-grid" id="res-ejes"></div>
+    </div>
+    <button class="btn btn-primary" onclick="reiniciar()">🔄 Jugar de nuevo</button>
+    <button class="btn btn-secondary" onclick="ir('s-qr','s-resultado')">📱 Compartir esta trivia</button>
+  </div>
+
+  <!-- ══════════ QR ══════════ -->
+  <div class="screen" id="s-qr">
+    <div class="card" style="margin-top:12px">
+      <p class="qr-title">📱 Código QR</p>
+      <p class="qr-sub">Proyectá esta pantalla. Tus alumnos escanean el código y acceden a la trivia desde sus teléfonos.</p>
+
+      <div class="qr-wrap">
+        <div class="qr-box">
+          <img id="qr-img" src="" alt="Código QR" width="220" height="220">
+        </div>
+      </div>
+
+      <p class="url-label">🔗 URL de la trivia (editá si es necesario)</p>
+      <input class="url-input" type="url" id="qr-input"
+             placeholder="https://…" oninput="actualizarQR(this.value)">
+
+      <div class="qr-url-box" id="qr-url-txt">—</div>
+
+      <div class="qr-hint">
+        <strong>💡 ¿Cómo funciona el QR?</strong>
+        El código QR codifica la URL donde está alojada esta trivia. Para que funcione,
+        el archivo debe estar publicado en la web (Moodle, Google Sites, Netlify, etc.)
+        No funciona si el archivo está solo en tu computadora.
+        Leé las instrucciones completas en el documento adjunto.
+      </div>
+
+      <button class="btn btn-secondary" onclick="volverDeQR()">← Volver</button>
+    </div>
+  </div>
+
+  <div class="bottom-pad"></div>
+</div>
+
+<!-- BOTÓN SIGUIENTE — fijo al pie, siempre visible -->
+<div class="sig-fixed" id="sig-fixed">
+  <button class="btn-sig-inner" id="btn-sig" onclick="siguiente()">Siguiente →</button>
+</div>
+
+<script>
+// ── TOUCH FIX: enables :active on iOS Safari ──
+document.addEventListener('touchstart', function(){}, {passive: true});
+
+// ══════════════════════════════════════════════
+//  DATOS
+// ══════════════════════════════════════════════
+const EJES = {
+  Geo:  { label:'🌎 Geográfico',               badge:'badge-geo',  bg:'#d6eeff', c:'#005f9e' },
+  Hist: { label:'📜 Histórico',                badge:'badge-hist', bg:'#fff3cd', c:'#7a4f00' },
+  Jur:  { label:'⚖️ Jurídico e Internacional', badge:'badge-jur',  bg:'#ede7f6', c:'#5e35b1' }
+};
+
+const BANCO = [
+  // ── GEOGRÁFICO ──────────────────────────────
+  {
+    eje:'Geo',
+    p:'¿A cuántos kilómetros se encuentran las Islas Malvinas del territorio continental argentino?',
+    ops:['200 km','400 km','800 km','1.200 km'], c:1,
+    exp:'Las Malvinas están a solo 400 km del continente argentino, mientras que Gran Bretaña se encuentra a más de 12.000 km. Esta asimetría es uno de los argumentos geográficos centrales del reclamo.'
+  },
+  {
+    eje:'Geo',
+    p:'¿Qué región argentina comparte el mismo ecosistema, flora y fauna con las Islas Malvinas?',
+    ops:['El Chaco','La Pampa','La Patagonia','El Litoral'], c:2,
+    exp:'La Patagonia continental y las Islas Malvinas forman una unidad ecológica: pingüinos, albatros, lobos marinos, caranchos y muchas otras especies son comunes a ambas zonas. Esa continuidad natural refuerza el reclamo de soberanía.'
+  },
+  {
+    eje:'Geo',
+    p:'¿Cuál es la extensión total de los espacios marítimos argentinos aprobados por la CLPC-ONU?',
+    ops:['3.761.274 km²','4.500.000 km²','6.683.000 km²','9.000.000 km²'], c:2,
+    exp:'Los espacios marítimos argentinos alcanzan 6.683.000 km², casi el doble de la superficie continental de 3.761.274 km². Las Malvinas forman parte de esa plataforma.'
+  },
+  {
+    eje:'Geo',
+    p:'¿Qué convención internacional amplió a 350 millas la plataforma continental de los Estados?',
+    ops:['Convención de Ginebra (1958)','CONVEMAR (1982)','Tratado de Montevideo (1973)','Resolución 2065 (1965)'], c:1,
+    exp:'La CONVEMAR (1982) amplió los derechos soberanos sobre la plataforma continental hasta 350 millas cuando el Estado prueba la prolongación natural de su territorio. Argentina lo demostró científicamente con COPLA; fue aprobado en 2016.'
+  },
+  {
+    eje:'Geo',
+    p:'¿Qué comisión argentina presentó ante la ONU la demarcación del límite exterior de la plataforma continental en 2009?',
+    ops:['CONICET','COPLA','CONAE','SEGEMAR'], c:1,
+    exp:'La Comisión Nacional del Límite Exterior de la Plataforma Continental (COPLA) presentó en 2009 la demarcación del límite exterior, que fue aprobada por la CLPC-ONU en 2016.'
+  },
+  // ── HISTÓRICO ───────────────────────────────
+  {
+    eje:'Hist',
+    p:'¿En qué año Gran Bretaña ocupó las Islas Malvinas por la fuerza, expulsando a las autoridades argentinas?',
+    ops:['1810','1820','1833','1982'], c:2,
+    exp:'En 1833, Gran Bretaña expulsó por la fuerza a las autoridades y parte de la población argentina. Esta usurpación jamás fue reconocida como legítima por el Estado argentino.'
+  },
+  {
+    eje:'Hist',
+    p:'¿Quién fue designado Comandante Político y Militar de las Malvinas en Puerto Soledad en 1829?',
+    ops:['José de San Martín','Luis María Vernet','David Jewett','Cornelio Saavedra'], c:1,
+    exp:'Luis María Vernet fue designado Comandante Político y Militar de las Islas Malvinas en 1829, ejerciendo soberanía efectiva argentina hasta la usurpación británica de 1833.'
+  },
+  {
+    eje:'Hist',
+    p:'¿Qué principio jurídico establecía que los nuevos Estados americanos debían conservar el territorio heredado de la etapa colonial?',
+    ops:['Habeas corpus','Uti possidetis iuris','Res nullius','Status quo ante bellum'], c:1,
+    exp:'El uti possidetis iuris ("lo que se posee de acuerdo al derecho") legitimó que Argentina heredara las Malvinas de España, así como heredó los demás territorios del Virreinato del Río de la Plata.'
+  },
+  {
+    eje:'Hist',
+    p:'¿En qué año el marino David Jewett tomó posesión formal de las Malvinas en nombre del gobierno patrio argentino?',
+    ops:['1810','1816','1820','1825'], c:2,
+    exp:'En 1820, David Jewett tomó posesión formal de las Malvinas izando la bandera argentina en Puerto Soledad. Fue uno de los primeros actos soberanos del nuevo Estado argentino sobre el archipiélago.'
+  },
+  {
+    eje:'Hist',
+    p:'¿Cuántas gobernaciones estableció la Corona española en las Islas Malvinas entre 1767 y 1811?',
+    ops:['12 gobernaciones','22 gobernaciones','32 gobernaciones','42 gobernaciones'], c:2,
+    exp:'Desde 1767 hasta 1811, la Corona española estableció su autoridad en las islas mediante 32 gobernaciones ejercidas por 19 gobernadores. Esto demuestra que las islas formaron parte del Imperio Español en América del Sur durante todo ese período.'
+  },
+  // ── JURÍDICO ────────────────────────────────
+  {
+    eje:'Jur',
+    p:'¿Qué Resolución de la ONU reconoció la disputa de soberanía entre Argentina y el Reino Unido sobre las Malvinas?',
+    ops:['Resolución 1514 (1960)','Resolución 2065 (1965)','Resolución 3000 (1972)','Resolución 181 (1947)'], c:1,
+    exp:'La Resolución 2065 (XX) de 1965 reconoció la existencia de una disputa de soberanía e instó a las partes a negociar. Es la referencia jurídico-diplomática más importante sobre la cuestión Malvinas y fue ratificada múltiples veces.'
+  },
+  {
+    eje:'Jur',
+    p:'¿Cómo se denomina el célebre alegato presentado por el embajador argentino ante la ONU en 1964?',
+    ops:['Alegato Perón','Alegato Belgrano','Alegato Ruda','Alegato Saavedra'], c:2,
+    exp:'El Alegato Ruda fue presentado por el embajador José María Ruda el 9 de septiembre de 1964. Argumentó que las islas son una prolongación geográfica argentina y que la usurpación de 1833 fue un acto de fuerza sin sustento jurídico. Fue decisivo para los pronunciamientos favorables a Argentina en la ONU.'
+  },
+  {
+    eje:'Jur',
+    p:'¿Cuál de estos organismos regionales NO ha respaldado los derechos argentinos sobre las Malvinas?',
+    ops:['Mercosur','CELAC','OEA','OTAN'], c:3,
+    exp:'La OTAN es la alianza militar occidental de la que Gran Bretaña forma parte. Mercosur, CELAC y OEA, en cambio, se han pronunciado a favor de los derechos argentinos sobre el archipiélago y han instado a reanudar las negociaciones.'
+  },
+  {
+    eje:'Jur',
+    p:'¿Por qué Argentina rechazó aplicar el principio de "libre determinación de los pueblos" al caso Malvinas?',
+    ops:[
+      'Porque ese principio no existe en el derecho internacional',
+      'Porque la población fue instalada por Gran Bretaña tras expulsar a los argentinos en 1833',
+      'Porque las islas están completamente deshabitadas',
+      'Porque la ONU nunca reconoció ese principio'
+    ], c:1,
+    exp:'Argentina argumentó que en Malvinas no hay un pueblo colonizado que deba decidir su futuro, sino una población instalada por el ocupante luego de expulsar a los argentinos. La ONU validó esta postura con la Resolución 2065.'
+  },
+  {
+    eje:'Jur',
+    p:'¿En qué año el Reino Unido reconoció a las Provincias Unidas como Estado soberano sin presentar reclamos sobre las Malvinas?',
+    ops:['1810','1820','1825','1833'], c:2,
+    exp:'En 1825, el Reino Unido reconoció a las Provincias Unidas como Estado y firmó un tratado de amistad, comercio y navegación sin presentar ningún reclamo sobre las Malvinas, que ya estaban bajo soberanía argentina.'
+  }
+];
+
+// ══════════════════════════════════════════════
+//  ESTADO
+// ══════════════════════════════════════════════
+let preguntas = [], idx = 0, pts = 0, respondida = false;
+let prevPantalla = 's-intro';
+let porEje = {};
+
+// ══════════════════════════════════════════════
+//  UTILIDADES
+// ══════════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function ir(dest, desde) {
+  if (desde) prevPantalla = desde;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(dest).classList.add('active');
+  if (dest !== 's-juego') document.getElementById('sig-fixed').classList.remove('visible');
+  if (dest === 's-qr') cargarQR();
+  window.scrollTo(0, 0);
+}
+
+function volverDeQR() { ir(prevPantalla); }
+
+// ══════════════════════════════════════════════
+//  JUEGO
+// ══════════════════════════════════════════════
+function iniciar() {
+  // Barajar preguntas y tomar 12 (todas)
+  preguntas = shuffle(BANCO).slice(0, 12);
+  idx = 0; pts = 0; respondida = false;
+  porEje = { Geo:{c:0,t:0}, Hist:{c:0,t:0}, Jur:{c:0,t:0} };
+  ir('s-juego', 's-intro');
+  cargarPregunta();
+}
+
+function cargarPregunta() {
+  respondida = false;
+  const q = preguntas[idx];
+  const eje = EJES[q.eje];
+
+  // Barra progreso
+  document.getElementById('prog-bar').style.width = (idx / preguntas.length * 100) + '%';
+  document.getElementById('prog-txt').textContent = `Pregunta ${idx + 1} de ${preguntas.length}`;
+  document.getElementById('prog-pts').textContent = `⭐ ${pts} pts`;
+
+  // Badge
+  const badge = document.getElementById('q-badge');
+  badge.className = 'badge ' + eje.badge;
+  badge.textContent = eje.label;
+
+  // Texto pregunta
+  document.getElementById('q-txt').textContent = q.p;
+
+  // Opciones — también baraja su orden
+  const ops = shuffle(q.ops.map((txt, i) => ({ txt, orig: i })));
+  const cont = document.getElementById('q-ops');
+  cont.innerHTML = '';
+  ops.forEach(op => {
+    const btn = document.createElement('button');
+    btn.className = 'opcion';
+    btn.textContent = op.txt;
+    btn.dataset.orig = op.orig;
+    btn.addEventListener('click', () => responder(op.orig));
+    cont.appendChild(btn);
+  });
+
+  // Reset
+  const expl = document.getElementById('q-expl');
+  expl.className = 'explicacion';
+  expl.innerHTML = '';
+  document.getElementById('sig-fixed').classList.remove('visible');
+}
+
+function responder(selOrig) {
+  if (respondida) return;
+  respondida = true;
+
+  const q = preguntas[idx];
+  const correcto = selOrig === q.c;
+  porEje[q.eje].t++;
+  if (correcto) { pts++; porEje[q.eje].c++; }
+
+  // Colorear botones
+  document.querySelectorAll('.opcion').forEach(btn => {
+    btn.disabled = true;
+    const orig = parseInt(btn.dataset.orig);
+    if (orig === q.c)         btn.classList.add('correcta');
+    else if (orig === selOrig) btn.classList.add('incorrecta');
+    else                       btn.classList.add('opacada');
+  });
+
+  // Explicación
+  const expl = document.getElementById('q-expl');
+  expl.innerHTML = `<strong>${correcto ? '✅ ¡Correcto!' : '❌ Incorrecto.'}</strong>${q.exp}`;
+  expl.className = 'explicacion show';
+
+  // Botón siguiente fijo
+  const sig = document.getElementById('btn-sig');
+  const sigFixed = document.getElementById('sig-fixed');
+  sig.textContent = idx < preguntas.length - 1 ? 'Siguiente →' : 'Ver mis resultados →';
+  sigFixed.classList.add('visible');
+  document.getElementById('prog-pts').textContent = `⭐ ${pts} pts`;
+}
+
+function siguiente() {
+  if (idx < preguntas.length - 1) {
+    idx++;
+    cargarPregunta();
+    window.scrollTo(0, 0);
+  } else {
+    mostrarResultado();
+  }
+}
+
+function mostrarResultado() {
+  const total = preguntas.length;
+  const pct = pts / total;
+  let emoji, msg;
+  if (pct >= .92)      { emoji = '🏆'; msg = '¡Sobresaliente! Dominás los tres ejes del reclamo soberano.'; }
+  else if (pct >= .75) { emoji = '⭐'; msg = '¡Muy bien! Conocés los argumentos centrales del caso Malvinas.'; }
+  else if (pct >= .5)  { emoji = '📚'; msg = 'Bien. Revisá los ejes con menor puntaje y repetí la trivia.'; }
+  else                 { emoji = '💡'; msg = 'Las Malvinas nos invitan a seguir aprendiendo. ¡A repasar!'; }
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-score').textContent = pts;
+  document.getElementById('res-msg').textContent = msg;
+
+  const cont = document.getElementById('res-ejes');
+  cont.innerHTML = '';
+  ['Geo','Hist','Jur'].forEach(k => {
+    const eje = EJES[k], d = porEje[k];
+    if (!d.t) return;
+    const div = document.createElement('div');
+    div.className = 'eje-row';
+    div.style.background = eje.bg;
+    div.innerHTML = `<span class="eje-row-label" style="color:${eje.c}">${eje.label}</span>
+                     <span class="eje-row-score" style="color:${eje.c}">${d.c}/${d.t}</span>`;
+    cont.appendChild(div);
+  });
+
+  ir('s-resultado', 's-juego');
+}
+
+function reiniciar() { ir('s-intro', 's-resultado'); }
+
+// ══════════════════════════════════════════════
+//  QR
+// ══════════════════════════════════════════════
+function cargarQR() {
+  const url = window.location.href;
+  document.getElementById('qr-input').value = url;
+  renderQR(url);
+}
+
+function actualizarQR(url) {
+  if (url.length > 10) renderQR(url);
+}
+
+function renderQR(url) {
+  // api.qrserver.com — gratuito, sin clave API, funciona en iOS y Android
+  const api = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&ecc=M&data=${encodeURIComponent(url)}`;
+  document.getElementById('qr-img').src = api;
+  document.getElementById('qr-url-txt').textContent = url;
+}
+</script>
+</body>
+</html>
